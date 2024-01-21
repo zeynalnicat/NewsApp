@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_gravity="center"
+    android:layout_height="200dp"
+    android:backgroundTint="#2B2A2A"
+    android:layout_marginEnd="15dp"
+    app:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgNews"
+            android:layout_width="0dp"
+            android:padding="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/view"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="#90BDBDBD"
+            android:translationZ="10dp"
+            app:cardCornerRadius="20dp">
+
+            <TextView
+                android:id="@+id/txtCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="News"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+               />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/txtNewsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:translationZ="10dp"
+            android:textColor="@color/white"
+            android:layout_marginStart="20dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="40dp"
+            android:maxLines="2"
+            tools:text="TextView" />
+    </FrameLayout>
+</androidx.cardview.widget.CardView>
