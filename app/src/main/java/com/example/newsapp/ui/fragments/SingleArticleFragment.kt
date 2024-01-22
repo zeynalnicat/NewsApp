@@ -139,7 +139,7 @@ class SingleArticleFragment : Fragment() {
                 binding.txtNewtsDate.text = article.publishedAt
                 binding.txtNewsDescription.text = article.description
                 binding.txtContent.text = article.content
-
+                binding.txtNewsTitle.text = article.title
                 binding.txtReadMore.autoLinkMask = Linkify.WEB_URLS
 
                 binding.txtReadMore.setOnClickListener {
