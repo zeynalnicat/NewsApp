@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.util.Linkify
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,8 @@ import com.example.newsapp.viewmodel.SingleArticleViewModel
 import com.example.newsapp.viewmodel.factory.SingleArticleFactory
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 
@@ -59,7 +62,7 @@ class SingleArticleFragment : Fragment() {
         singleArticleViewModel.insertion.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
-                    if (it.data.toInt() == -1) {
+                    if (it.data.toInt() == 0) {
                         Toast.makeText(requireContext(), "Removed from bookmark", Toast.LENGTH_SHORT)
                             .show()
                     } else {
@@ -83,7 +86,7 @@ class SingleArticleFragment : Fragment() {
         singleArticleViewModel.check.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
-                    binding.iconAddBookmark.setImageResource(if (it.data == 0) R.drawable.bookmark_blue else R.drawable.bookmark_blue_filled)
+                    binding.iconAddBookmark.setImageResource(if (!it.data) R.drawable.bookmark_blue else R.drawable.bookmark_blue_filled)
                 }
 
                 is Resource.Error -> {
@@ -114,10 +117,7 @@ class SingleArticleFragment : Fragment() {
 
         }
 
-        article?.let {
-            singleArticleViewModel.checkDb(it.title!!)
-        }
-
+    singleArticleViewModel.checkDb(article?.title?:"")
 
     }
 
@@ -131,12 +131,17 @@ class SingleArticleFragment : Fragment() {
                     .load(article.urlToImage)
                     .placeholder(R.drawable.noimage)
                     .into(binding.imgArticle)
+                val inputFormatter = DateTimeFormatter.ISO_DATE_TIME
+                val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+                val dateTime = LocalDateTime.parse(article.publishedAt, inputFormatter)
+                val formattedDate = dateTime.format(outputFormatter)
 
                 binding.txtAuthorName.text =
                     if (article.author.isNullOrBlank()) "Anonym" else article.author
                 binding.txtHeader.text = article.title
                 binding.txtCategory.text = article.source.name
-                binding.txtNewtsDate.text = article.publishedAt
+                binding.txtNewtsDate.text = formattedDate
                 binding.txtNewsDescription.text = article.description
                 binding.txtContent.text = article.content
                 binding.txtNewsTitle.text = article.title

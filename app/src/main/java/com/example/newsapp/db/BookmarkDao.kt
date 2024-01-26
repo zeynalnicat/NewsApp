@@ -19,8 +19,8 @@ interface BookmarkDao {
     suspend fun checkDb(title:String):Int
 
 
-    @Delete
-    suspend fun delete(bookmarkEntity: BookmarkEntity)
+    @Query("Delete from bookmark where title=:title")
+    suspend fun delete(title: String)
 
     @Query("Select * from bookmark")
     suspend fun getAll():List<BookmarkEntity>

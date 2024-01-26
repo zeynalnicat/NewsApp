@@ -11,4 +11,9 @@ interface NewsApi {
    suspend fun getTop(@Query("country") country:String):Response<News>
 
 
+
+   @GET("everything")
+   suspend fun search(@Query("q") query:String):Response<News>
+
+
 }

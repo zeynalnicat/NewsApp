@@ -12,6 +12,11 @@ import com.example.newsapp.databinding.ItemSavedNewsBinding
 import com.example.newsapp.db.BookmarkEntity
 import com.example.newsapp.model.Article
 import com.example.newsapp.model.Source
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class BookMarkAdapter(private val nav: (Bundle) -> Unit) :
     RecyclerView.Adapter<BookMarkAdapter.ViewHolder>() {
@@ -55,7 +60,13 @@ class BookMarkAdapter(private val nav: (Bundle) -> Unit) :
                 .into(binding.imgArticle)
 
             binding.txtNewsTitle.text = article.title
-            binding.txtDate.text = article.date
+            val inputFormatter = DateTimeFormatter.ISO_DATE_TIME
+            val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+            val dateTime = LocalDateTime.parse(article.date, inputFormatter)
+            val formattedDate = dateTime.format(outputFormatter)
+
+            binding.txtDate.text = formattedDate
             binding.txtCategory.text = article.source
             binding.txtAuthorName.text = article.author
 

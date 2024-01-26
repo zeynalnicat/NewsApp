@@ -12,47 +12,62 @@ import kotlinx.coroutines.launch
 
 class SingleArticleViewModel(private val roomDb: RoomDb) : ViewModel() {
     private val _insertion = MutableLiveData<Resource<Long>>()
-    private val _check = MutableLiveData<Resource<Int>>()
+    private val _check = MutableLiveData<Resource<Boolean>>()
     val insertion: LiveData<Resource<Long>>
         get() = _insertion
 
-    val check: LiveData<Resource<Int>>
+    val check: LiveData<Resource<Boolean>>
         get() = _check
 
 
     fun insert(bookmarkEntity: BookmarkEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val bookmarkDao = roomDb.bookmarkDao()
+        checkDb(bookmarkEntity.title)
+        val bookmarkDao = roomDb.bookmarkDao()
+        if (_check.value == Resource.Success(false))
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
 
-                val count = bookmarkDao.checkDb(bookmarkEntity.title)
-
-                if (count == 0) {
                     val isSuccessful = bookmarkDao.insert(bookmarkEntity)
                     if (isSuccessful != -1L) {
                         _insertion.postValue(Resource.Success(isSuccessful))
+                        _check.postValue(Resource.Success(true))
                     } else {
                         _insertion.postValue(Resource.Error(Exception("There was an error while insertion")))
                     }
-                } else {
-                    bookmarkDao.delete(bookmarkEntity)
-                    _insertion.postValue(Resource.Success(-1))
+                } catch (e: Exception) {
+                    _insertion.postValue(Resource.Error(e))
                 }
-            } catch (e: Exception) {
-                _insertion.postValue(Resource.Error(e))
+            }
+        else {
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    bookmarkDao.delete(bookmarkEntity.title)
+                    _insertion.postValue(Resource.Success(0L))
+                    _check.postValue(Resource.Success(false))
+                } catch (e: Exception) {
+                    _check.postValue(Resource.Error(e))
+                }
             }
         }
     }
 
+
     fun checkDb(title: String) {
+        _check.postValue(Resource.Loading)
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val bookmarkDao = roomDb.bookmarkDao()
                 val count = bookmarkDao.checkDb(title)
-                _check.postValue(Resource.Success(count))
+                if (count > 0) {
+                    _check.postValue(Resource.Success(true))
+                } else {
+                    _check.postValue(Resource.Success(false))
+                }
+
             } catch (e: Exception) {
                 _check.postValue(Resource.Error(e))
             }
         }
     }
+
 }

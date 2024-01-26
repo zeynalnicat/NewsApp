@@ -6,13 +6,13 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#90AAA9A9">
+       >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/viewBack"
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:backgroundTint="#80919090"
+            android:backgroundTint="#80B1B0B0"
             android:translationZ="10dp"
             android:layout_marginTop="10dp"
             app:cardCornerRadius="20dp"
@@ -30,9 +30,9 @@
                     android:freezesText="true"
                     android:gravity="center"
                     android:maxLines="1"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="12sp"
-
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.034" />
+        app:layout_constraintGuide_percent="0.05" />
 
         <View
             android:id="@+id/view2"
@@ -99,7 +99,7 @@
             android:id="@+id/view"
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:backgroundTint="#80919090"
+            android:backgroundTint="#80B1B0B0"
             android:translationZ="10dp"
             app:cardCornerRadius="20dp"
             app:layout_constraintStart_toStartOf="@+id/leftGuideline"
@@ -133,6 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:maxLines="5"
+            android:textColor="@color/black"
             tools:text="TextView"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -146,6 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
             app:layout_constraintStart_toStartOf="@+id/leftGuideline"
@@ -157,6 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="TextView"
+            android:textStyle="bold"
             android:textColor="#757575"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
             app:layout_constraintTop_toBottomOf="@+id/imgArticle" />
@@ -189,6 +192,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             tools:text="TextView"
+            android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideline"
             app:layout_constraintStart_toStartOf="@+id/leftGuideline"

@@ -14,9 +14,12 @@ import kotlinx.coroutines.launch
 class HomeViewModel : ViewModel() {
     private val _topHeadlines = MutableLiveData<Resource<List<Article>>>()
     private val newsApi = RetrofitInstance.getInstance()?.create(NewsApi::class.java)!!
+    private val _searchedNews = MutableLiveData<Resource<List<Article>>>()
 
     val topHeadlines: LiveData<Resource<List<Article>>>
         get() = _topHeadlines
+
+    val searchedNews: LiveData<Resource<List<Article>>> get() = _searchedNews
 
 
     fun getTopHeadlines() {
@@ -36,6 +39,26 @@ class HomeViewModel : ViewModel() {
             } catch (e: Exception) {
                 _topHeadlines.postValue(Resource.Error(e))
             }
+        }
+    }
+
+
+    fun search(query: String) {
+        _searchedNews.postValue(Resource.Loading)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = newsApi.search(query)
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        val searchedArticles = it.articles
+                        _searchedNews.postValue(Resource.Success(searchedArticles))
+                    }
+
+                }
+            } catch (e: Exception) {
+                _searchedNews.postValue(Resource.Error(e))
+            }
+
         }
     }
 }
