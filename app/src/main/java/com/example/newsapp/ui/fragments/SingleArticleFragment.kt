@@ -138,7 +138,7 @@ class SingleArticleFragment : Fragment() {
                 val formattedDate = dateTime.format(outputFormatter)
 
                 binding.txtAuthorName.text =
-                    if (article.author.isNullOrBlank()) "Anonym" else article.author
+                    if (article.author.isNullOrBlank()) "Anonymous" else article.author
                 binding.txtHeader.text = article.title
                 binding.txtCategory.text = article.source.name
                 binding.txtNewtsDate.text = formattedDate

@@ -12,7 +12,7 @@
             android:id="@+id/viewBack"
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:backgroundTint="#80B1B0B0"
+            android:backgroundTint="#95B1B0B0"
             android:translationZ="10dp"
             android:layout_marginTop="10dp"
             app:cardCornerRadius="20dp"
@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.035" />
 
         <View
             android:id="@+id/view2"
